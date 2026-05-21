@@ -25,6 +25,7 @@ import DoneZone from '@/components/DoneZone';
 import DateStamp from '@/components/DateStamp';
 import ExportButton from '@/components/ExportButton';
 import RabbitCelebration from '@/components/RabbitCelebration';
+import ThemeToggle from '@/components/ThemeToggle';
 
 export default function Home() {
   const [isMounted, setIsMounted] = useState(false);
@@ -199,7 +200,10 @@ export default function Home() {
           >
             The Board
           </h1>
-          <ExportButton data={board} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+            <ThemeToggle />
+            <ExportButton data={board} />
+          </div>
         </header>
 
         {/* Spotlight zone */}
