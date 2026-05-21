@@ -22,13 +22,33 @@ export const metadata: Metadata = {
   description: 'A personal to-do list for the one thing that matters today.',
 };
 
+// Inline no-flash script: runs before paint, sets data-theme on <html>
+// from localStorage (or OS preference) so dark-mode users never see a
+// white flash on load. Kept inline + small on purpose.
+const themeInitScript = `
+(function() {
+  try {
+    var stored = window.localStorage.getItem('board-theme');
+    var theme = stored === 'light' || stored === 'dark'
+      ? stored
+      : (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${lora.variable} ${sourceSerif4.variable}`}>
+    <html lang="en" className={`${lora.variable} ${sourceSerif4.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body>{children}</body>
     </html>
   );
