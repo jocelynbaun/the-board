@@ -170,6 +170,7 @@ export default function Home() {
       </AnimatePresence>
 
       <main
+        className="main-content"
         style={{
           position: 'relative',
           zIndex: 3,

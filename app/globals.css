@@ -99,3 +99,10 @@ body {
   white-space: nowrap;
   border-width: 0;
 }
+
+@media (min-width: 1440px) {
+  .main-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
