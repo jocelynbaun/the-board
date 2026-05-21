@@ -16,6 +16,7 @@ import {
   clearSpotlight,
   clearDone,
   exportData,
+  updateTaskCategory,
 } from '@/lib/storage';
 import { BoardData, Task } from '@/lib/types';
 import Spotlight from '@/components/Spotlight';
@@ -78,6 +79,10 @@ export default function Home() {
 
   const handleSpotlightClear = useCallback(() => {
     mutate((prev) => clearSpotlight(prev));
+  }, [mutate]);
+
+  const handleCategoryChange = useCallback((id: string, category: Task['category']) => {
+    mutate((prev) => updateTaskCategory(prev, id, category));
   }, [mutate]);
 
   const handleClearDone = useCallback(() => {
@@ -225,6 +230,7 @@ export default function Home() {
             onDelete={handleDeleteTask}
             onPromote={handlePromote}
             onUpdate={handleUpdateTask}
+            onCategoryChange={handleCategoryChange}
           />
         </section>
 

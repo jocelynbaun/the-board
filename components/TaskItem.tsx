@@ -1,9 +1,14 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ArrowUp, X } from 'lucide-react';
 import { Task } from '@/lib/types';
+
+const CAT_CONFIG = {
+  work:   { label: 'Work',   dot: '#3B6DD1', bg: '#EBF1FC', text: '#3B6DD1' },
+  family: { label: 'Family', dot: '#7C3B9E', bg: '#F0EBFA', text: '#7C3B9E' },
+};
 
 interface TaskItemProps {
   task: Task;
@@ -11,16 +16,28 @@ interface TaskItemProps {
   onDelete: (id: string) => void;
   onPromote: (id: string) => void;
   onUpdate: (id: string, text: string) => void;
+  onCategoryChange: (id: string, category: Task['category']) => void;
 }
 
-export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpdate }: TaskItemProps) {
+export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpdate, onCategoryChange }: TaskItemProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(task.task);
   const [isHovered, setIsHovered] = useState(false);
   const [isShaking, setIsShaking] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false);
   const tooltipTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!showCategoryMenu) return;
+    function handleClick(e: MouseEvent) {
+      if (!menuRef.current?.contains(e.target as Node)) setShowCategoryMenu(false);
+    }
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [showCategoryMenu]);
   const prefersReducedMotion = useReducedMotion();
 
   const showActions = prefersReducedMotion ? true : isHovered;
@@ -154,6 +171,89 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
           >
             {task.task}
           </span>
+        )}
+      </div>
+
+      {/* Category trigger + dropdown */}
+      <div ref={menuRef} style={{ position: 'relative', flexShrink: 0 }}>
+        <button
+          onClick={() => setShowCategoryMenu((v) => !v)}
+          style={{
+            background: 'none',
+            border: task.category ? `1px solid ${CAT_CONFIG[task.category].text}` : 'none',
+            cursor: 'pointer',
+            padding: task.category ? '3px 8px' : '2px 6px',
+            borderRadius: 20,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 4,
+            backgroundColor: task.category ? CAT_CONFIG[task.category].bg : 'transparent',
+            fontFamily: 'var(--font-body)',
+            fontSize: 12,
+            color: task.category ? CAT_CONFIG[task.category].text : '#B8B3AD',
+          }}
+        >
+          {task.category ? (
+            <>
+              <div style={{ width: 6, height: 6, borderRadius: '50%', background: CAT_CONFIG[task.category].dot, flexShrink: 0 }} />
+              {CAT_CONFIG[task.category].label}
+            </>
+          ) : '+ Category'}
+        </button>
+        {showCategoryMenu && (
+          <div style={{
+            position: 'absolute', right: 0, top: 'calc(100% + 4px)',
+            width: 140, background: '#FFFFFF',
+            border: '1px solid #E8E4DF', borderRadius: 8,
+            boxShadow: '0 4px 12px rgba(0,0,0,0.08)', zIndex: 100,
+            padding: '4px 0',
+          }}>
+            {(['work', 'family'] as const).map((cat) => (
+              <div
+                key={cat}
+                onClick={() => { onCategoryChange(task.id, cat); setShowCategoryMenu(false); }}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  padding: '8px 12px', cursor: 'pointer',
+                  fontSize: 14, fontFamily: 'var(--font-body)',
+                  color: 'var(--color-text-primary)',
+                }}
+              >
+                <div style={{ width: 8, height: 8, borderRadius: '50%', background: CAT_CONFIG[cat].dot, flexShrink: 0 }} />
+                {CAT_CONFIG[cat].label}
+                {task.category === cat && <span style={{ marginLeft: 'auto', color: 'var(--color-text-secondary)' }}>✓</span>}
+              </div>
+            ))}
+            <div
+              onClick={() => { onCategoryChange(task.id, undefined); setShowCategoryMenu(false); }}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 8,
+                padding: '8px 12px', cursor: 'pointer',
+                fontSize: 14, fontFamily: 'var(--font-body)',
+                color: 'var(--color-text-secondary)',
+              }}
+            >
+              <div style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid #D4CFC9', flexShrink: 0 }} />
+              None
+              {!task.category && <span style={{ marginLeft: 'auto' }}>✓</span>}
+            </div>
+            {task.category && (
+              <>
+                <hr style={{ margin: '4px 0', border: 'none', borderTop: '1px solid #E8E4DF' }} />
+                <div
+                  onClick={() => { onCategoryChange(task.id, undefined); setShowCategoryMenu(false); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    padding: '8px 12px', cursor: 'pointer',
+                    fontSize: 12, fontFamily: 'var(--font-body)',
+                    color: 'var(--color-text-secondary)',
+                  }}
+                >
+                  ✕ Clear
+                </div>
+              </>
+            )}
+          </div>
         )}
       </div>
 

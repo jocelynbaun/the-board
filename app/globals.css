@@ -14,7 +14,7 @@
   --color-task-rule: #EDE8E2;
   --color-overlay: rgba(250, 249, 246, 0.96);
   --spotlight-glow: 0 4px 20px rgba(196, 168, 245, 0.2);
-  --focus-ring: 0 0 0 2px var(--color-amber);
+  --focus-ring: 0 0 0 2px #9B72E8;
   --font-display: var(--font-lora-loaded), Georgia, serif;
   --font-body: var(--font-source-serif-loaded), Georgia, serif;
 }
@@ -83,10 +83,10 @@ body {
   background: none;
   transition: background 0.15s, border-color 0.15s;
 }
-.pill-all.selected   { background: #FFFFFF; border-color: #D4CFC9; color: var(--color-text-primary); }
-.pill-work.selected  { background: #EBF1FC; border-color: #B8CEFA; color: var(--color-text-primary); }
-.pill-family.selected{ background: #F0EBFA; border-color: #D4B8FA; color: var(--color-text-primary); }
-.pill:not(.selected) { background: #FAF9F6; border-color: #E8E4DF; color: var(--color-text-secondary); }
+.pill-all.selected    { background: #FFFFFF; border-color: #D4CFC9; color: var(--color-text-primary); }
+.pill-work.selected   { background: #EBF1FC; border-color: #3B6DD1; color: #3B6DD1; }
+.pill-family.selected { background: #F0EBFA; border-color: #7C3B9E; color: #7C3B9E; }
+.pill:not(.selected)  { background: #FAF9F6; border-color: #D4CFC9; color: var(--color-text-secondary); }
 
 .sr-only {
   position: absolute;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SpotlightTask } from '@/lib/types';
 
@@ -26,6 +26,7 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
     autoResize();
   }, [spotlight?.task, autoResize]);
 
+  const [isCheckboxHovered, setIsCheckboxHovered] = useState(false);
   const isCompleted = spotlight?.completed ?? false;
   const isEmpty = !spotlight || !spotlight.task;
 
@@ -117,10 +118,13 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
         }}
       >
         {/* Complete checkbox */}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
         <button
           onClick={() => !isCompleted && onComplete()}
           aria-label={isCompleted ? 'Spotlight completed' : 'Mark spotlight complete'}
           className="focus-ring"
+          onMouseEnter={() => setIsCheckboxHovered(true)}
+          onMouseLeave={() => setIsCheckboxHovered(false)}
           style={{
             width: 44,
             height: 44,
@@ -140,8 +144,8 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
               width: 18,
               height: 18,
               borderRadius: '50%',
-              border: `1.5px solid ${isCompleted ? 'var(--color-amber)' : 'var(--color-border)'}`,
-              background: isCompleted ? 'var(--color-amber)' : 'transparent',
+              border: `2px solid ${isCompleted ? '#9B72E8' : isCheckboxHovered ? '#7C4FD4' : '#9B72E8'}`,
+              background: isCompleted ? '#9B72E8' : 'transparent',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -155,6 +159,13 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
             )}
           </div>
         </button>
+        <span style={{
+          fontFamily: 'var(--font-body)', fontSize: 12,
+          color: 'var(--color-text-secondary)', marginLeft: 4,
+        }}>
+          {isCompleted ? 'Completed' : 'Mark complete'}
+        </span>
+        </div>
 
         {/* Clear link */}
         {spotlight && !isCompleted && (

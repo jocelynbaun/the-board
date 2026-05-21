@@ -114,11 +114,7 @@ export function completeSpotlight(data: BoardData): BoardData {
   };
   return {
     ...data,
-    spotlight: {
-      ...data.spotlight,
-      completed: true,
-      completed_at: completedTask.completed_at,
-    },
+    spotlight: null,
     list: [...data.list, completedTask],
   };
 }
@@ -141,6 +137,13 @@ export function removeSpotlight(data: BoardData): BoardData {
 
 export function clearSpotlight(data: BoardData): BoardData {
   return { ...data, spotlight: null };
+}
+
+export function updateTaskCategory(data: BoardData, id: string, category: Task['category']): BoardData {
+  return {
+    ...data,
+    list: data.list.map((t) => t.id === id ? { ...t, category } : t),
+  };
 }
 
 export function clearDone(data: BoardData): BoardData {

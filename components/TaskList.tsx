@@ -12,9 +12,16 @@ interface TaskListProps {
   onDelete: (id: string) => void;
   onPromote: (id: string) => void;
   onUpdate: (id: string, text: string) => void;
+  onCategoryChange: (id: string, category: Task['category']) => void;
 }
 
-export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote, onUpdate }: TaskListProps) {
+const ADD_CAT_OPTIONS = [
+  { value: undefined as Task['category'],  label: 'None',   dot: null,      selBg: '#FFFFFF', selBorder: '#D4CFC9', selText: 'var(--color-text-primary)' },
+  { value: 'work' as Task['category'],     label: 'Work',   dot: '#3B6DD1', selBg: '#EBF1FC', selBorder: '#3B6DD1', selText: '#3B6DD1' },
+  { value: 'family' as Task['category'],   label: 'Family', dot: '#7C3B9E', selBg: '#F0EBFA', selBorder: '#7C3B9E', selText: '#7C3B9E' },
+];
+
+export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote, onUpdate, onCategoryChange }: TaskListProps) {
   const [inputValue, setInputValue] = useState('');
   const [isShaking, setIsShaking] = useState(false);
   const [filter, setFilter] = useState<'all' | 'work' | 'family'>('all');
@@ -87,6 +94,7 @@ export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote
                 onDelete={onDelete}
                 onPromote={onPromote}
                 onUpdate={onUpdate}
+                onCategoryChange={onCategoryChange}
               />
             </motion.li>
           ))}
@@ -122,22 +130,33 @@ export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote
             border: 'none',
             borderBottom: '1px solid var(--color-border)',
             outline: 'none',
-            padding: '8px 0',
+            padding: '8px 16px',
           }}
         />
       </div>
       {inputFocused && (
         <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-          {(['none', 'work', 'family'] as const).map((cat) => {
-            const isSelected = (cat === 'none' && !newCategory) || cat === newCategory;
+          {ADD_CAT_OPTIONS.map((opt) => {
+            const isSelected = opt.value === newCategory;
             return (
               <button
-                key={cat}
+                key={opt.label}
                 onMouseDown={(e) => e.preventDefault()}
-                onClick={() => setNewCategory(cat === 'none' ? undefined : cat)}
-                className={`pill pill-${cat === 'none' ? 'all' : cat}${isSelected ? ' selected' : ''}`}
+                onClick={() => setNewCategory(opt.value)}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 6,
+                  padding: '4px 10px', borderRadius: 20,
+                  fontSize: 12, fontFamily: 'var(--font-body)',
+                  border: `1px solid ${isSelected ? opt.selBorder : '#D4CFC9'}`,
+                  cursor: 'pointer',
+                  background: isSelected ? opt.selBg : '#FAF9F6',
+                  color: isSelected ? opt.selText : 'var(--color-text-secondary)',
+                }}
               >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                {isSelected && opt.dot && (
+                  <div style={{ width: 6, height: 6, borderRadius: '50%', background: opt.dot, flexShrink: 0 }} />
+                )}
+                {opt.label}
               </button>
             );
           })}
