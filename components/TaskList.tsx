@@ -16,11 +16,11 @@ interface TaskListProps {
 }
 
 const ADD_CAT_OPTIONS = [
-  { value: undefined as Task['category'],    label: 'None',      dot: null,      selBg: '#FFFFFF', selBorder: '#D4CFC9', selText: 'var(--color-text-primary)' },
-  { value: 'work' as Task['category'],       label: 'Work',      dot: '#3B6DD1', selBg: '#EBF1FC', selBorder: '#3B6DD1', selText: '#3B6DD1' },
-  { value: 'family' as Task['category'],     label: 'Family',    dot: '#7C3B9E', selBg: '#F0EBFA', selBorder: '#7C3B9E', selText: '#7C3B9E' },
-  { value: 'project1' as Task['category'],   label: 'Project 1', dot: '#2A9D8F', selBg: '#E8F5F4', selBorder: '#A8D8D3', selText: '#2A9D8F' },
-  { value: 'project2' as Task['category'],   label: 'Project 2', dot: '#E76F51', selBg: '#FDF0EB', selBorder: '#F5C4B0', selText: '#E76F51' },
+  { value: undefined as Task['category'],    label: 'None',      dot: null,                       selBg: 'var(--color-surface)',    selBorder: 'var(--color-border-strong)', selText: 'var(--color-text-primary)' },
+  { value: 'work' as Task['category'],       label: 'Work',      dot: 'var(--cat-work-dot)',      selBg: 'var(--cat-work-bg)',      selBorder: 'var(--cat-work-dot)',         selText: 'var(--cat-work-text)' },
+  { value: 'family' as Task['category'],     label: 'Family',    dot: 'var(--cat-family-dot)',    selBg: 'var(--cat-family-bg)',    selBorder: 'var(--cat-family-text)',      selText: 'var(--cat-family-text)' },
+  { value: 'project1' as Task['category'],   label: 'Project 1', dot: 'var(--cat-project1-dot)',  selBg: 'var(--cat-project1-bg)',  selBorder: 'var(--cat-project1-border)',  selText: 'var(--cat-project1-text)' },
+  { value: 'project2' as Task['category'],   label: 'Project 2', dot: 'var(--cat-project2-dot)',  selBg: 'var(--cat-project2-bg)',  selBorder: 'var(--cat-project2-border)',  selText: 'var(--cat-project2-text)' },
 ];
 
 export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote, onUpdate, onCategoryChange }: TaskListProps) {
@@ -149,9 +149,9 @@ export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote
                   display: 'flex', alignItems: 'center', gap: 6,
                   padding: '4px 10px', borderRadius: 20,
                   fontSize: 12, fontFamily: 'var(--font-body)',
-                  border: `1px solid ${isSelected ? opt.selBorder : '#D4CFC9'}`,
+                  border: `1px solid ${isSelected ? opt.selBorder : 'var(--color-border-strong)'}`,
                   cursor: 'pointer',
-                  background: isSelected ? opt.selBg : '#FAF9F6',
+                  background: isSelected ? opt.selBg : 'var(--color-surface-alt)',
                   color: isSelected ? opt.selText : 'var(--color-text-secondary)',
                 }}
               >
