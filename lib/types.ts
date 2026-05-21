@@ -4,7 +4,7 @@ export interface Task {
   completed: boolean;
   created_at: string;
   completed_at?: string;
-  category?: 'work' | 'family';
+  category?: 'work' | 'family' | 'project1' | 'project2';
 }
 
 export interface SpotlightTask {

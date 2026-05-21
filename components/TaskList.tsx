@@ -16,17 +16,19 @@ interface TaskListProps {
 }
 
 const ADD_CAT_OPTIONS = [
-  { value: undefined as Task['category'],  label: 'None',   dot: null,      selBg: '#FFFFFF', selBorder: '#D4CFC9', selText: 'var(--color-text-primary)' },
-  { value: 'work' as Task['category'],     label: 'Work',   dot: '#3B6DD1', selBg: '#EBF1FC', selBorder: '#3B6DD1', selText: '#3B6DD1' },
-  { value: 'family' as Task['category'],   label: 'Family', dot: '#7C3B9E', selBg: '#F0EBFA', selBorder: '#7C3B9E', selText: '#7C3B9E' },
+  { value: undefined as Task['category'],    label: 'None',      dot: null,      selBg: '#FFFFFF', selBorder: '#D4CFC9', selText: 'var(--color-text-primary)' },
+  { value: 'work' as Task['category'],       label: 'Work',      dot: '#3B6DD1', selBg: '#EBF1FC', selBorder: '#3B6DD1', selText: '#3B6DD1' },
+  { value: 'family' as Task['category'],     label: 'Family',    dot: '#7C3B9E', selBg: '#F0EBFA', selBorder: '#7C3B9E', selText: '#7C3B9E' },
+  { value: 'project1' as Task['category'],   label: 'Project 1', dot: '#2A9D8F', selBg: '#E8F5F4', selBorder: '#A8D8D3', selText: '#2A9D8F' },
+  { value: 'project2' as Task['category'],   label: 'Project 2', dot: '#E76F51', selBg: '#FDF0EB', selBorder: '#F5C4B0', selText: '#E76F51' },
 ];
 
 export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote, onUpdate, onCategoryChange }: TaskListProps) {
   const [inputValue, setInputValue] = useState('');
   const [isShaking, setIsShaking] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'work' | 'family'>('all');
+  const [filter, setFilter] = useState<'all' | 'work' | 'family' | 'project1' | 'project2'>('all');
   const [inputFocused, setInputFocused] = useState(false);
-  const [newCategory, setNewCategory] = useState<'work' | 'family' | undefined>(undefined);
+  const [newCategory, setNewCategory] = useState<'work' | 'family' | 'project1' | 'project2' | undefined>(undefined);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const activeTasks = tasks.filter((t) => !t.completed && (filter === 'all' || t.category === filter));
@@ -46,13 +48,13 @@ export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote
   return (
     <div>
       <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-        {(['all', 'work', 'family'] as const).map((cat) => (
+        {(['all', 'work', 'family', 'project1', 'project2'] as const).map((cat) => (
           <button
             key={cat}
             onClick={() => setFilter(cat)}
             className={`pill pill-${cat}${filter === cat ? ' selected' : ''}`}
           >
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            {({ all: 'All', work: 'Work', family: 'Family', project1: 'Project 1', project2: 'Project 2' })[cat]}
           </button>
         ))}
       </div>

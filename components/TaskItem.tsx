@@ -6,8 +6,10 @@ import { ArrowUp, X } from 'lucide-react';
 import { Task } from '@/lib/types';
 
 const CAT_CONFIG = {
-  work:   { label: 'Work',   dot: '#3B6DD1', bg: '#EBF1FC', text: '#3B6DD1' },
-  family: { label: 'Family', dot: '#7C3B9E', bg: '#F0EBFA', text: '#7C3B9E' },
+  work:     { label: 'Work',      dot: '#3B6DD1', bg: '#EBF1FC', text: '#3B6DD1' },
+  family:   { label: 'Family',   dot: '#7C3B9E', bg: '#F0EBFA', text: '#7C3B9E' },
+  project1: { label: 'Project 1', dot: '#2A9D8F', bg: '#E8F5F4', text: '#2A9D8F' },
+  project2: { label: 'Project 2', dot: '#E76F51', bg: '#FDF0EB', text: '#E76F51' },
 };
 
 interface TaskItemProps {
@@ -208,7 +210,7 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
             boxShadow: '0 4px 12px rgba(0,0,0,0.08)', zIndex: 100,
             padding: '4px 0',
           }}>
-            {(['work', 'family'] as const).map((cat) => (
+            {(['work', 'family', 'project1', 'project2'] as const).map((cat) => (
               <div
                 key={cat}
                 onClick={() => { onCategoryChange(task.id, cat); setShowCategoryMenu(false); }}

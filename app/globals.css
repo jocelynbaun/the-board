@@ -85,7 +85,9 @@ body {
 }
 .pill-all.selected    { background: #FFFFFF; border-color: #D4CFC9; color: var(--color-text-primary); }
 .pill-work.selected   { background: #EBF1FC; border-color: #3B6DD1; color: #3B6DD1; }
-.pill-family.selected { background: #F0EBFA; border-color: #7C3B9E; color: #7C3B9E; }
+.pill-family.selected   { background: #F0EBFA; border-color: #7C3B9E; color: #7C3B9E; }
+.pill-project1.selected { background: #E8F5F4; border-color: #A8D8D3; color: #2A9D8F; }
+.pill-project2.selected { background: #FDF0EB; border-color: #F5C4B0; color: #E76F51; }
 .pill:not(.selected)  { background: #FAF9F6; border-color: #D4CFC9; color: var(--color-text-secondary); }
 
 .sr-only {
