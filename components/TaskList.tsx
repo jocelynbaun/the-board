@@ -41,7 +41,7 @@ export default function TaskList({ tasks, onAdd, onComplete, onDelete, onPromote
     onAdd(trimmed, newCategory);
     setInputValue('');
     setNewCategory(undefined);
-  }, [inputValue, onAdd]);
+  }, [inputValue, newCategory, onAdd]);
 
   return (
     <div>

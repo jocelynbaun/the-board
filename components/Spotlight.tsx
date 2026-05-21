@@ -88,6 +88,12 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
           onSave(e.target.value);
           autoResize();
         }}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !isCompleted) {
+            e.preventDefault();
+            textareaRef.current?.blur();
+          }
+        }}
         onInput={autoResize}
         rows={1}
         className="focus-ring"
