@@ -37,8 +37,8 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
       transition={{ duration: 0.3 }}
       style={{
         background: 'var(--color-spotlight-bg)',
-        border: isEmpty ? '1px dashed #C4A8F5' : '1px solid var(--color-spotlight-border)',
-        borderLeft: isEmpty ? '3px dashed #C4A8F5' : '3px solid #C4A8F5',
+        border: isEmpty ? '1px dashed var(--color-spotlight-border)' : '1px solid var(--color-spotlight-border)',
+        borderLeft: isEmpty ? '3px dashed var(--color-spotlight-border)' : '3px solid var(--color-spotlight-border)',
         boxShadow: 'var(--spotlight-glow)',
         borderRadius: 12,
         padding: '24px 24px',
@@ -150,8 +150,8 @@ export default function Spotlight({ spotlight, onSave, onComplete, onRemove, onC
               width: 18,
               height: 18,
               borderRadius: '50%',
-              border: `2px solid ${isCompleted ? '#9B72E8' : isCheckboxHovered ? '#7C4FD4' : '#9B72E8'}`,
-              background: isCompleted ? '#9B72E8' : 'transparent',
+              border: `2px solid ${isCompleted ? 'var(--color-spotlight-accent)' : isCheckboxHovered ? 'var(--color-spotlight-accent-hover)' : 'var(--color-spotlight-accent)'}`,
+              background: isCompleted ? 'var(--color-spotlight-accent)' : 'transparent',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',

@@ -6,10 +6,10 @@ import { ArrowUp, X } from 'lucide-react';
 import { Task } from '@/lib/types';
 
 const CAT_CONFIG = {
-  work:     { label: 'Work',      dot: '#3B6DD1', bg: '#EBF1FC', text: '#3B6DD1' },
-  family:   { label: 'Family',   dot: '#7C3B9E', bg: '#F0EBFA', text: '#7C3B9E' },
-  project1: { label: 'Project 1', dot: '#2A9D8F', bg: '#E8F5F4', text: '#2A9D8F' },
-  project2: { label: 'Project 2', dot: '#E76F51', bg: '#FDF0EB', text: '#E76F51' },
+  work:     { label: 'Work',      dot: 'var(--cat-work-dot)',     bg: 'var(--cat-work-bg)',     text: 'var(--cat-work-text)' },
+  family:   { label: 'Family',    dot: 'var(--cat-family-dot)',   bg: 'var(--cat-family-bg)',   text: 'var(--cat-family-text)' },
+  project1: { label: 'Project 1', dot: 'var(--cat-project1-dot)', bg: 'var(--cat-project1-bg)', text: 'var(--cat-project1-text)' },
+  project2: { label: 'Project 2', dot: 'var(--cat-project2-dot)', bg: 'var(--cat-project2-bg)', text: 'var(--cat-project2-text)' },
 };
 
 interface TaskItemProps {
@@ -192,7 +192,7 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
             backgroundColor: task.category ? CAT_CONFIG[task.category].bg : 'transparent',
             fontFamily: 'var(--font-body)',
             fontSize: 12,
-            color: task.category ? CAT_CONFIG[task.category].text : '#B8B3AD',
+            color: task.category ? CAT_CONFIG[task.category].text : 'var(--color-text-muted)',
           }}
         >
           {task.category ? (
@@ -205,8 +205,8 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
         {showCategoryMenu && (
           <div style={{
             position: 'absolute', right: 0, top: 'calc(100% + 4px)',
-            width: 140, background: '#FFFFFF',
-            border: '1px solid #E8E4DF', borderRadius: 8,
+            width: 140, background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)', borderRadius: 8,
             boxShadow: '0 4px 12px rgba(0,0,0,0.08)', zIndex: 100,
             padding: '4px 0',
           }}>
@@ -235,13 +235,13 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
                 color: 'var(--color-text-secondary)',
               }}
             >
-              <div style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid #D4CFC9', flexShrink: 0 }} />
+              <div style={{ width: 8, height: 8, borderRadius: '50%', border: '1.5px solid var(--color-border-strong)', flexShrink: 0 }} />
               None
               {!task.category && <span style={{ marginLeft: 'auto' }}>✓</span>}
             </div>
             {task.category && (
               <>
-                <hr style={{ margin: '4px 0', border: 'none', borderTop: '1px solid #E8E4DF' }} />
+                <hr style={{ margin: '4px 0', border: 'none', borderTop: '1px solid var(--color-border)' }} />
                 <div
                   onClick={() => { onCategoryChange(task.id, undefined); setShowCategoryMenu(false); }}
                   style={{
@@ -266,7 +266,7 @@ export default function TaskItem({ task, onComplete, onDelete, onPromote, onUpda
             <div style={{
               position: 'absolute', bottom: '100%', left: '50%',
               transform: 'translateX(-50%)',
-              background: '#1A1814', color: '#FFFFFF',
+              background: 'var(--color-tooltip-bg)', color: 'var(--color-tooltip-fg)',
               fontSize: 12, borderRadius: 8,
               padding: '4px 8px', whiteSpace: 'nowrap',
               pointerEvents: 'none', marginBottom: 4,
